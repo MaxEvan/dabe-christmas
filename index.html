@@ -1,0 +1,207 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Langar&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        font-family: "Langar", "Lucida Sans", "Lucida Sans Regular",
+          "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        font-size: 60px;
+      }
+
+      @media screen and (max-width: 500px) {
+        html {
+          font-size: 40px;
+        }
+      }
+
+      * {
+        font-size: 1rem;
+        color: red;
+        font-weight: 700;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background: black;
+      }
+
+      .christmas {
+        display: block;
+        object-fit: cover;
+        width: 70vw;
+        max-width: 600px;
+        margin: auto;
+      }
+
+      #m {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .snow {
+        color: white;
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      @keyframes heartbeat {
+        0% {
+          transform: scale(1);
+        }
+        20% {
+          transform: scale(0.85);
+        }
+        60% {
+          transform: scale(1);
+        }
+        80% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes shrink {
+        0% {
+          transform: scale(1);
+        }
+        80% {
+          transform: scale(2);
+        }
+        100% {
+          transform: scale(0);
+          /* position: fixed; */
+        }
+      }
+
+      @keyframes appear {
+        0% {
+          opacity: 0;
+          transform: rotate(280deg) scale(0);
+          visibility: visible;
+        }
+        100% {
+          opacity: 1;
+          transform: rotate(360deg) scale(1);
+          visibility: visible;
+        }
+      }
+
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+          transform: rotate(280deg) scale(0);
+          visibility: visible;
+        }
+        100% {
+          opacity: 1;
+          transform: rotate(360deg) scale(1);
+          visibility: visible;
+        }
+      }
+
+      .gift-wrapper {
+        position: fixed;
+        bottom: 50px;
+      }
+
+      .gift {
+        width: 75vw;
+        max-width: 300px;
+      }
+
+      .gift-box:hover {
+        cursor: pointer;
+        animation: heartbeat 0.9s infinite;
+      }
+
+      .gift-wrapper.activated .gift-box {
+        animation: shrink 1s 1 forwards;
+      }
+
+      .gift-photo,
+      .gift-message {
+        position: absolute;
+        visibility: hidden;
+        left: 0;
+        top: 0;
+      }
+
+      .gift-wrapper.activated .gift-photo {
+        border-radius: 20px;
+        animation: appear 2s 1s forwards;
+        display: initial;
+      }
+
+      .gift-wrapper.activated .gift-message {
+        font-size: 30px;
+        margin: auto;
+        top: initial;
+        text-align: center;
+        animation: fade-in 1s 3s forwards;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+          1px 1px 0 #000;
+        bottom: -30;
+      }
+    </style>
+  </head>
+  <body>
+    <marquee scrollAmount="15"
+      >Merry Christmas Dabertte Jemimah Baldemor Sanchez.............. Wooow
+      that's a long name! No, seriously, it must've been really annoying having
+      to write that on your school exams... I mean..... I thought 2 names were
+      already long but 4... OMG :P...... Now...... Open your gift....... What
+      are you waiting for!?!?!</marquee
+    >
+    <img class="christmas" src="./christmas.gif" alt="merry christmas" />
+    <div class="gift-wrapper">
+      <img class="gift gift-box" src="./gift.svg" alt="gift" />
+      <img class="gift gift-photo" src="./love.jpg" alt="gift" />
+      <p class="gift gift-message">Labyu Smoll ♥</p>
+    </div>
+  </body>
+  <script>
+    function init() {
+      const width = window.innerWidth;
+      const snowCount = 120;
+      const snowBase = document.createElement("marquee");
+      snowBase.innerHTML = ".";
+      snowBase.direction = "down";
+      snowBase.classList.add("snow");
+      snowBase.style =
+        "font-size:60px; position: fixed; width: 100vw; height: 100vh;";
+
+      for (let i = 0; i < snowCount; i++) {
+        const padding = i * 35;
+        const currentFlake = snowBase.cloneNode(true);
+        currentFlake.style.paddingLeft = padding;
+        const dropSpeed = Math.floor(Math.random() * 20) + 1;
+        currentFlake.scrollAmount =
+          dropSpeed < 5 ? dropSpeed + Math.random() * 40 : dropSpeed;
+        document.body.prepend(currentFlake);
+      }
+
+      // document.body.appendChild(snowBase);
+
+      document
+        .querySelectorAll(".gift-wrapper")[0]
+        .addEventListener("click", (e) => {
+          console.log(e.currentTarget);
+          e.currentTarget.classList.add("activated");
+        });
+    }
+
+    init();
+  </script>
+</html>
