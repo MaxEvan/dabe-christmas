@@ -154,6 +154,25 @@
           1px 1px 0 #000;
         bottom: -30;
       }
+
+      #modal {
+        position: fixed;
+        display: flex;
+        background: black;
+        top: 0;
+        bottom: 0;
+        z-index: 10000000;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #modal button {
+        border-radius: 10px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -171,8 +190,21 @@
       <p class="gift gift-message">Labyu Smoll ♥</p>
     </div>
   </body>
+  <audio controls loop style="display: none">
+    <source src="jingle-bell-rock.mp3" type="audio/mpeg" />
+  </audio>
+  <div id="modal">
+    Ready for your 🧀🎄 suprise?
+    <button id="confirm">YAS</button>
+  </div>
   <script>
     function init() {
+      document.getElementById("confirm").addEventListener("click", () => {
+        document.body.removeChild(document.getElementById("modal"));
+        document.querySelector("audio").play();
+        document.getElementById("confirm").removeEventListener("click");
+      });
+
       const width = window.innerWidth;
       const snowCount = 120;
       const snowBase = document.createElement("marquee");
@@ -191,8 +223,6 @@
           dropSpeed < 5 ? dropSpeed + Math.random() * 40 : dropSpeed;
         document.body.prepend(currentFlake);
       }
-
-      // document.body.appendChild(snowBase);
 
       document
         .querySelectorAll(".gift-wrapper")[0]
